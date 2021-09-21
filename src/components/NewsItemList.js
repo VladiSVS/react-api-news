@@ -5,6 +5,7 @@ class NewsItemList extends Component {
         super(props);
         this.state = {
             dataNews: [],
+            dataIsReady: false,
             tempAtoZ: true,
             tempDate: true,
         }
@@ -13,7 +14,10 @@ class NewsItemList extends Component {
     componentDidMount() {
         fetch('https://newsapi.org/v2/top-headlines?country=de&category=business&apiKey=93b404087ea643e5990b6b7401d61ed2')
             .then(response => response.json())
-            .then(json => this.setState({ dataNews: json.articles }))
+            .then(json => this.setState({ dataNews: json.articles }, () => {
+                console.log("Data is Raedy")
+                this.setState({ dataIsReady: true })
+            }))
     }
 
     sortByNameAZ = () => {
@@ -73,7 +77,7 @@ class NewsItemList extends Component {
 
                 </div>
                 <div>
-                    {this.state.dataNews.map((elt, i) => <article key={i}>
+                    {this.state.dataIsReady && this.state.dataNews.map((elt, i) => <article key={i}>
                         <img src={elt.urlToImage} alt=""></img>
                         <h1>{elt.title}</h1>
                         <p>{elt.description}</p>
