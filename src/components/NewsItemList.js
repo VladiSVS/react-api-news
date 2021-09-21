@@ -23,7 +23,7 @@ class NewsItemList extends Component {
     sortByNameAZ = () => {
         let temp = this.state.dataNews
         temp.sort((a, b) => {
-            if (a.name > b.name) {
+            if (a.title > b.title) {
                 return 1
             } else {
                 return -1
